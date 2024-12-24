@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_ostad/ui/screens/forgot_password_verify_email_screen.dart';
+import 'package:task_manager_ostad/ui/screens/main_bottom_nav_screeen.dart';
 import 'package:task_manager_ostad/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_ostad/ui/utils/app_colors.dart';
 import 'package:task_manager_ostad/ui/widgets/screen_background.dart';
@@ -55,7 +56,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, MainBottomNavScreeen.name);
+                    },
                     child: const Icon(Icons.arrow_circle_right_outlined),
                   ),
                   const SizedBox(height: 48),

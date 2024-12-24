@@ -1,22 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager_ostad/ui/screens/forgot_password_verify_otp_screen.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:task_manager_ostad/ui/screens/reset_password_screen.dart';
+import 'package:task_manager_ostad/ui/screens/sign_in_screen.dart';
 import 'package:task_manager_ostad/ui/utils/app_colors.dart';
 import 'package:task_manager_ostad/ui/widgets/screen_background.dart';
 
-class ForgotPasswordVerifyEmailScreen extends StatefulWidget {
-  const ForgotPasswordVerifyEmailScreen({super.key});
+class ForgotPasswordVerifyOtpScreen extends StatefulWidget {
+  const ForgotPasswordVerifyOtpScreen({super.key});
 
-  static const String name = '/forgot-password/verify-email';
+  static const String name = '/forgot-password/verify-otp';
 
   @override
-  State<ForgotPasswordVerifyEmailScreen> createState() =>
-      _ForgotPasswordVerifyEmailScreenState();
+  State<ForgotPasswordVerifyOtpScreen> createState() =>
+      _ForgotPasswordVerifyOtpScreenState();
 }
 
-class _ForgotPasswordVerifyEmailScreenState
-    extends State<ForgotPasswordVerifyEmailScreen> {
-  final TextEditingController _emailTEController = TextEditingController();
+class _ForgotPasswordVerifyOtpScreenState
+    extends State<ForgotPasswordVerifyOtpScreen> {
+  final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -33,27 +35,21 @@ class _ForgotPasswordVerifyEmailScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 80),
-                  Text('Your Email Address', style: textTheme.titleLarge),
+                  Text('Pin Verification', style: textTheme.titleLarge),
                   const SizedBox(height: 4),
                   const Text(
-                    'A 6 digits of OTP will be sent to your email address',
+                    'A 6 digits of OTP has been sent to your email address',
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _emailTEController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  ),
+                  _buildPinCodeTextField(),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ForgotPasswordVerifyOtpScreen.name);
+                      Navigator.pushNamed(context, ResetPasswordScreen.name);
                     },
                     child: const Icon(Icons.arrow_circle_right_outlined),
                   ),
@@ -68,6 +64,30 @@ class _ForgotPasswordVerifyEmailScreenState
         ),
       ),
     );
+  }
+
+  Widget _buildPinCodeTextField() {
+    return PinCodeTextField(
+                  length: 6,
+                  animationType: AnimationType.fade,
+                  keyboardType: TextInputType.number,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(5),
+                    fieldHeight: 50,
+                    fieldWidth: 40,
+                    activeFillColor: Colors.white,
+                    selectedFillColor: Colors.white,
+                    inactiveFillColor: Colors.white,
+                    inactiveColor: Colors.white,
+
+                  ),
+                  animationDuration: Duration(milliseconds: 300),
+                  backgroundColor: Colors.transparent,
+                  enableActiveFill: true,
+                  controller: _otpTEController,
+                  appContext: context,
+                );
   }
 
   Widget _buildSignInSection() {
@@ -86,7 +106,8 @@ class _ForgotPasswordVerifyEmailScreenState
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Navigator.pop(context);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, SignInScreen.name, (value) => false);
               },
           ),
         ],
@@ -96,7 +117,7 @@ class _ForgotPasswordVerifyEmailScreenState
 
   @override
   void dispose() {
-    _emailTEController.dispose();
+    _otpTEController.dispose();
     super.dispose();
   }
 }
