@@ -34,7 +34,7 @@ class _MainBottomNavScreeenState extends State<MainBottomNavScreeen> {
           },
           destinations: const [
             NavigationDestination(
-                icon: Icon(Icons.add_task_outlined), label: 'New'),
+                icon: Icon(Icons.add_task_outlined), label: 'New Task'),
             NavigationDestination(
                 icon: Icon(Icons.sync_rounded), label: 'Progress'),
             NavigationDestination(
