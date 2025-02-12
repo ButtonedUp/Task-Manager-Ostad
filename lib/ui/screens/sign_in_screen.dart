@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager_ostad/data/models/user_model.dart';
 import 'package:task_manager_ostad/data/services/network_caller.dart';
 import 'package:task_manager_ostad/data/utils/urls.dart';
+import 'package:task_manager_ostad/ui/controllers/auth_controller.dart';
 import 'package:task_manager_ostad/ui/screens/forgot_password_verify_email_screen.dart';
 import 'package:task_manager_ostad/ui/screens/main_bottom_nav_screeen.dart';
 import 'package:task_manager_ostad/ui/screens/sign_up_screen.dart';
@@ -118,6 +120,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
 
     if (response.isSuccess) {
+      String token = response.reponseData!['token'];
+      UserModel userModel = UserModel.fromJson(response.reponseData!['data']);
+      await AuthController.saveUserData(token, userModel);
       showSnackbarMessage(context, 'Log in succesful!');
       Navigator.pushReplacementNamed(context, MainBottomNavScreeen.name);
     } else {
