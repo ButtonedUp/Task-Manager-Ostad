@@ -30,7 +30,7 @@ class _CompletedTaskListScreenState extends State<CompletedTaskListScreen> {
       ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
-          return const TaskItem();
+          //return const TaskItem();
         },
     );
   }
